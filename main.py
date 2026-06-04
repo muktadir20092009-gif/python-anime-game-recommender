@@ -39,13 +39,11 @@ game_genres = {
 
 # ---------- LOAD JSON DATA ----------
 
-anime_file = open("anime_data.json", "r")
-anime_data = json.load(anime_file)
-anime_file.close()
+with open("anime_data.json" "r") as anime_file:
+    anime_data = json.load(anime_file)
 
-game_file = open("game_data.json", "r")
-game_data = json.load(game_file)
-game_file.close()
+with open("game_data.json" "r") as game_file:
+    game_data = json.load(game_file)
 
 # ---------- SAVE JSON DATA ----------
 
