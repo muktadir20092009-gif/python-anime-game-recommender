@@ -10,12 +10,16 @@ def save_history(text):
         file.write(text + "\n")
 
 def read_history():
-    with open("history.txt", "r") as file:
-        data = file.read()
-        if data.strip():
-            print(data)
-        else:
-            print("No history found.")
+    """Read and display history from history.txt file"""
+    try:
+        with open("history.txt", "r") as file:
+            data = file.read()
+            if data.strip():
+                print(data)
+            else:
+                print("No history found.")
+    except FileNotFoundError:
+        print("No history file found yet.")
     
 def clear_history():
     with open("history.txt","w") as file:
