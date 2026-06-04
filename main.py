@@ -48,14 +48,14 @@ with open("game_data.json","r") as game_file:
 # ---------- SAVE JSON DATA ----------
 
 def save_anime_data():
-    file = open("anime_data.json", "w")
-    json.dump(anime_data, file, indent=4)
-    file.close()
+    """Save anime data to JSON file"""
+    with open("anime_data.json", "w") as file:
+        json.dump(anime_data, file, indent=4)
 
 def save_game_data():
-    file = open("game_data.json", "w")
-    json.dump(game_data, file, indent=4)
-    file.close()
+    """Save game data to JSON file"""
+    with open("game_data.json", "w") as file:
+        json.dump(game_data, file, indent=4)
 
 # ---------- SHOW FUNCTIONS ----------
 
