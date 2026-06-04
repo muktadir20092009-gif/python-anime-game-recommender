@@ -23,7 +23,7 @@ def read_history():
     
 def clear_history():
     with open("history.txt","w") as file:
-        file.write(" ")
+        file.write("")
     
 # ---------- GENRES ----------
 
@@ -86,6 +86,9 @@ def show_recom(items):
         number += 1
 
 def random_recom(items):
+    if not items:
+        print("No recommendations available.")
+        return
     random_item = random.choice(items)
     print("\n=== Random Recommendation ===")
     print(random_item)
