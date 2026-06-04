@@ -1,0 +1,280 @@
+import random
+import json
+
+print("\n=== Anime/Game Recommendation App ===")
+
+# ---------- HISTORY FUNCTIONS ----------
+
+def save_history(text):
+    with open("history.txt", "a") as file:
+        file.write(text + "\n")
+
+def read_history():
+    with open("history.txt", "r") as file:
+        data = file.read()
+        if data.strip():
+            print(data)
+        else:
+            print("No history found.")
+    
+def clear_history():
+    with open("history.txt","w") as file:
+        file.write(" ")
+    
+# ---------- GENRES ----------
+
+anime_genres = {
+    "1": "Action",
+    "2": "Romance",
+    "3": "Isekai",
+    "4": "Horror"
+}
+
+game_genres = {
+    "1": "Action",
+    "2": "Pokemon",
+    "3": "Open World",
+    "4": "Horror"
+}
+
+# ---------- LOAD JSON DATA ----------
+
+anime_file = open("anime_data.json", "r")
+anime_data = json.load(anime_file)
+anime_file.close()
+
+game_file = open("game_data.json", "r")
+game_data = json.load(game_file)
+game_file.close()
+
+# ---------- SAVE JSON DATA ----------
+
+def save_anime_data():
+    file = open("anime_data.json", "w")
+    json.dump(anime_data, file, indent=4)
+    file.close()
+
+def save_game_data():
+    file = open("game_data.json", "w")
+    json.dump(game_data, file, indent=4)
+    file.close()
+
+# ---------- SHOW FUNCTIONS ----------
+
+def show_anime_genres():
+    print("1. Action")
+    print("2. Romance")
+    print("3. Isekai")
+    print("4. Horror")
+
+def show_game_genres():
+    print("1. Action")
+    print("2. Pokemon")
+    print("3. Open World")
+    print("4. Horror")
+
+def show_recom(items):
+    if len(items) >= 3:
+        random_items = random.sample(items, 3)
+    else:
+        random_items = items
+    number = 1
+    for item in random_items:
+        print(f"✨ {number}. {item}")
+        number += 1
+
+def random_recom(items):
+    random_item = random.choice(items)
+    print("\n=== Random Recommendation ===")
+    print(random_item)
+    save_history("Random Recommendation:")
+    save_history(random_item)
+
+# ---------- SEARCH FUNCTION ----------
+
+def check_search(search, genre, category, data, key):
+    if genre in search and category in search:
+        show_recom(data[key])
+        return True
+    return False
+
+# ---------- MAIN PROGRAM ----------
+
+name = input("Enter your name: ")
+
+print(f"\nWelcome, {name}, to the Anime/Game Recommendation App!")
+
+while True:
+    print("\n1. Anime")
+    print("2. Game")
+    print("3. View History")
+    print("4. Add Anime")
+    print("5. Add Game")
+    print("6. Search")
+    print("7. Clear History")
+    print("8. Remove Anime")
+    print("9. Remove Game")
+    print("10. Exit")
+
+    menu_choice = input("\nSelect an option: ")
+
+    # ---------- ANIME ----------
+
+    if menu_choice == "1":
+        save_history(f"{name} selected anime")
+        show_anime_genres()
+        choice = input("\nSelect your genre: ")
+        if choice in anime_data:
+            save_history(f"{name} selected {anime_genres[choice]} anime")
+            print("\n=== Anime Recommendations ===")
+            show_recom(anime_data[choice])
+            random_recom(anime_data[choice])
+        else:
+            print("Invalid choice. Please try again.")
+
+    # ---------- GAME ----------
+
+    elif menu_choice == "2":
+        save_history(f"{name} selected game")
+        show_game_genres()
+        choice = input("\nSelect your genre: ")
+        if choice in game_data:
+            save_history(f"{name} selected {game_genres[choice]} game")
+            print("\n=== Game Recommendations ===")
+            show_recom(game_data[choice])
+            random_recom(game_data[choice])
+        else:
+            print("Invalid choice. Please try again.")
+
+    # ---------- VIEW HISTORY ----------
+
+    elif menu_choice == "3":
+        print("\n=== Previous History ===")
+        read_history()
+
+    # ---------- ADD ANIME ----------
+
+    elif menu_choice == "4":
+        print("\n===Anime Genre===")
+        show_anime_genres()
+        choice_genre = input("\nSelect genre: ")
+        if choice_genre in anime_data:
+            new_anime = input("Enter anime name: ").title()
+            if new_anime not in anime_data[choice_genre]:
+                anime_data[choice_genre].append(new_anime)
+            else:
+                print("Anime already exists!")         
+            save_anime_data()
+            print(f"{new_anime} added successfully!")
+            save_history(
+                f"{name} added {new_anime} in {anime_genres[choice_genre]} anime"
+            )
+        else:
+            print("Invalid choice.")
+
+    # ---------- ADD GAME ----------
+
+    elif menu_choice == "5":
+        print("\n===Game Genre===")
+        show_game_genres()
+        choice_genre = input("\nSelect genre: ")
+        if choice_genre in game_data:
+            new_game = input("Enter game name: ").title()
+            if new_game not in game_data[choice_genre]:
+                game_data[choice_genre].append(new_game)
+            else:
+                print("Game already exists!")   
+            save_game_data()
+            print(f"{new_game} added successfully!")
+            save_history(
+                f"{name} added {new_game} in {game_genres[choice_genre]} game"
+            )
+        else:
+            print("Invalid choice.")
+
+    # ---------- SEARCH ----------
+
+    elif menu_choice == "6":
+        search = input("Search: ").lower()
+        save_history(f"{name} searched: {search}")
+        
+        search_data = [
+        # -------- anime section ---------
+        ( "action", "anime", anime_data, "1"),
+        ("romance", "anime", anime_data, "2"),
+        ("isekai", "anime", anime_data, "3"),
+        ("horror", "anime", anime_data, "4"),
+        #-------- game section ---------
+        ("action", "game", game_data, "1"),
+        ("pokemon", "game", game_data, "2"),
+        ("open world", "game", game_data, "3"),
+        ("horror", "game", game_data, "4")
+        ]
+        found = False
+        for genre, category, data, key in search_data:
+            if check_search(search, genre, category, data, key):
+                found = True
+        if not found:
+            print("No Result Found.")
+                
+    # ---------- CLEAR HISTORY ----------
+
+    elif menu_choice == "7":
+        clear_history()
+        print("History cleared successfully!")
+        
+    # ---------- REMOVE ANIME ----------
+    
+    elif menu_choice == "8":
+        show_anime_genres()
+        choice_genre = input("Select anime genre: ")
+        if choice_genre in anime_data:
+            print("\n=== Anime List ===")
+            for anime in anime_data[choice_genre]:
+                print(anime)
+            remove_anime = input(
+            "\nEnter anime name to remove: "
+        ).title()
+            if remove_anime in anime_data[choice_genre]:
+                    anime_data[choice_genre].remove(remove_anime)
+                    save_anime_data()
+                    print(f"{remove_anime} removed successfully!")
+                    save_history(
+                        f"{name} removed {remove_anime} in {anime_genres[choice_genre]}"
+            )
+            else:
+                 print("Anime not found.")
+        else:
+            print("Invalid choice.")
+    
+    # ---------- REMOVE GAME ----------
+  
+    elif menu_choice == "9":
+        show_game_genres()
+        choice_genre = input("Select your genre: ")
+        if choice_genre in game_data:
+            print("===Game List===")
+            for game in game_data[choice_genre]:
+                print(game)
+            remove_game = input("\nEnter game name to remove: ").title()
+            if remove_game in game_data[choice_genre]:
+                    game_data[choice_genre].remove(remove_game)
+                    save_game_data()
+                    print(f"{remove_game} removed successfully!")
+                    save_history(
+                     f"{name} remove {remove_game} in {game_genres[choice_genre]}"
+                     )
+            else:
+                print("Game not found.")  
+        else:
+            print("Invalid choice.")           
+    
+    # ---------- EXIT ----------
+
+    elif menu_choice == "10":
+        print(f"Goodbye, {name}!")
+        break
+    else:
+        print("Invalid choice. Please try again.")
+
+    print(f"\nThanks, {name}, for using the app!")
