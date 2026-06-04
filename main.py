@@ -260,7 +260,7 @@ while True:
                     save_game_data()
                     print(f"{remove_game} removed successfully!")
                     save_history(
-                     f"{name} remove {remove_game} in {game_genres[choice_genre]}"
+                     f"{name} removed {remove_game} in {game_genres[choice_genre]}"
                      )
             else:
                 print("Game not found.")  
