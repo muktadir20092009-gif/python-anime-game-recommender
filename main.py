@@ -49,6 +49,12 @@ with open("anime_data.json","r") as anime_file:
 with open("game_data.json","r") as game_file:
     game_data = json.load(game_file)
 
+with open("fav_anime.json","r") as fav_anime:
+    fav_anime_data = json.load(fav_anime)
+    
+with open("fav_game.json","r") as fav_game:
+    fav_game_data = json.load(fav_game)
+
 # ---------- SAVE JSON DATA ----------
 
 def save_anime_data():
@@ -60,6 +66,13 @@ def save_game_data():
     """Save game data to JSON file"""
     with open("game_data.json", "w") as file:
         json.dump(game_data, file, indent=4)
+
+def save_fav_anime():
+    with open("fav_anime.json","w") as file:
+        json.dump(fav_anime_data,file,indent = 4)
+def save_fav_game():
+    with open("fav_game.json","w") as file:
+        json.dump(fav_game_data,file,indent = 4)
 
 # ---------- SHOW FUNCTIONS ----------
 
@@ -119,7 +132,13 @@ while True:
     print("7. Clear History")
     print("8. Remove Anime")
     print("9. Remove Game")
-    print("10. Exit")
+    print("10. Add Favorit Anime")
+    print("11. Viwe Favorit Anime")
+    print("12. Remove Favorit Anime")
+    print("13. Add Favorit Game")
+    print("14. Viwe Favorit Game")
+    print("15. Remove Favorit Game")
+    print("16. Exit")
 
     menu_choice = input("\nSelect an option: ")
 
@@ -272,11 +291,28 @@ while True:
             else:
                 print("Game not found.")  
         else:
-            print("Invalid choice.")           
+            print("Invalid choice.")
+ 
+    # ---------- ADD FAVORIT ANIME ---------- 
+  
+    elif menu_choice == "10":
+        fav_anime = input("Enter your favorite anime name: ")
+        if fav_anime not in fav_anime_data:
+            fav_anime_data.append(fav_anime)
+            save_fav_anime()
+            print(f"{fav_anime} added successfully!")
+            save_history(f"{name} added {fav_anime} in favorite anime.")
+        else:
+            print("Anime already exists in favorites!")
+        
+    # ---------- VIEW FAVORIT ANIME ----------
     
+    elif menu_choice == "11":
+        print(fav_anime_data)
+        
     # ---------- EXIT ----------
 
-    elif menu_choice == "10":
+    elif menu_choice == "16":
         print(f"Goodbye, {name}!")
         break
     else:
