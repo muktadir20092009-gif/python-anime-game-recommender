@@ -296,7 +296,7 @@ while True:
     # ---------- ADD FAVORIT ANIME ---------- 
   
     elif menu_choice == "10":
-        fav_anime = input("Enter your favorite anime name: ")
+        fav_anime = input("Enter your favorite anime name: ").title() 
         if fav_anime not in fav_anime_data:
             fav_anime_data.append(fav_anime)
             save_fav_anime()
