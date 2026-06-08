@@ -308,7 +308,9 @@ while True:
     # ---------- VIEW FAVORIT ANIME ----------
     
     elif menu_choice == "11":
-        print(fav_anime_data)
+        print("\n=== Favorite Anime ===")
+        for anime in fav_anime_data:
+            print(f"⭐ {anime}")    
         
     # ---------- EXIT ----------
 
