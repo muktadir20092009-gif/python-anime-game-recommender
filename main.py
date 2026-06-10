@@ -133,10 +133,10 @@ while True:
     print("8. Remove Anime")
     print("9. Remove Game")
     print("10. Add Favorit Anime")
-    print("11. Viwe Favorit Anime")
+    print("11. View Favorit Anime")
     print("12. Remove Favorit Anime")
     print("13. Add Favorit Game")
-    print("14. Viwe Favorit Game")
+    print("14. View Favorit Game")
     print("15. Remove Favorit Game")
     print("16. Exit")
 
