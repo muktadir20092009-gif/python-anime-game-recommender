@@ -15,7 +15,8 @@ A command-line Anime and Game Recommendation App built with Python and JSON.
 - Remove anime/game
 - History tracking
 - JSON data storage
-
+- Add favorite anime/game
+- Remove favorite anime/game
 ## Technologies Used
 
 - Python
@@ -26,5 +27,4 @@ A command-line Anime and Game Recommendation App built with Python and JSON.
 
 - SQLite database
 - GUI version
-- Favorites system
 - User profiles
