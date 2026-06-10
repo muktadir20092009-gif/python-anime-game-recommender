@@ -310,7 +310,26 @@ while True:
     elif menu_choice == "11":
         print("\n=== Favorite Anime ===")
         for anime in fav_anime_data:
-            print(f"⭐ {anime}")    
+            print(f"⭐ {anime}")   
+
+
+    # --------- REMOVE FAVORIT ANIME ---------
+    
+    elif menu_choice == "12":
+        if not fav_anime_data:
+            print("No favorite anime found.")
+        else:
+            print("=== Favorite Anime List ===")
+            for anime in fav_anime_data:
+                print(anime)
+            remove_anime = input("Select Anime Name: ").title()
+            if remove_anime in fav_anime_data:
+                fav_anime_data.remove(remove_anime)
+                save_fav_anime()
+                print(f"\n {remove_anime} removed successfully!")
+                save_history(f"{name} removed {remove_anime} in favorite anime list.")
+            else:
+                print("Anime not found in favorite list.")
         
     # ---------- EXIT ----------
 
