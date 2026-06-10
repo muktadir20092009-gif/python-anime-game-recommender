@@ -330,6 +330,46 @@ while True:
                 save_history(f"{name} removed {remove_anime} in favorite anime list.")
             else:
                 print("Anime not found in favorite list.")
+
+    # ---------- ADD FAVORITE GAME ----------   
+    
+    elif menu_choice == "13":
+        fav_game = input("Enter your favorite game name: ").title()
+        if fav_game not in fav_game_data:
+            fav_game_data.append(fav_game)
+            save_fav_game()
+            print(f"{fav_game} added successfully!")
+            save_history(f"{name} added {fav_game} in favorite game.")
+        else:
+            print("Game already exists in favorites!")
+        
+    # ---------- VIEW FAVORITE GAME ----------
+
+    elif menu_choice == "14":
+        print("\n=== Favorite Game ===")
+        if not fav_game_data:
+            print("No favorite Game found.")
+        else:
+            for game in fav_game_data:
+                print(f"⭐ {game}")    
+           
+    # ---------- REMOVE FAVORIT GAME ----------
+    
+    elif menu_choice == "15":
+        if not fav_game_data:
+            print("No favorite game found.")
+        else:
+            print("=== Favorite Game List ===")
+            for game in fav_game_data:
+                print(game)
+            remove_game = input("Select Game Name: ").title()
+            if remove_game in fav_game_data:
+                fav_game_data.remove(remove_game)
+                save_fav_game()
+                print(f"\n {remove_game} removed successfully!")
+                save_history(f"{name} removed {remove_game} in favorite game list.")
+            else:
+                print("Game not found in favorite list.")
         
     # ---------- EXIT ----------
 
